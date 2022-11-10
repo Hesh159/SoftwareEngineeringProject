@@ -1,16 +1,16 @@
 
 class Light:
     
-    def __init__(self):
+    def __init__(self) -> None:
         self._trafficLightStates = ["Green", "Amber", "Red", "Idle"]
         self._trafficLightStatePointer = 3
         self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
 
-    def __repr__():
+    def __repr__() -> None:
         pass
 
     
-    def changeTrafficLightState(self):
+    def changeTrafficLightState(self) -> None:
         if self._trafficLightStatePointer == 3: #if light is currently in idle mode
             self._trafficLightStatePointer = 2
         else:
@@ -18,12 +18,15 @@ class Light:
             self._trafficLightStatePointer %= 3
         self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
 
-    def getCurrentTrafficLightState(self):
+    def getCurrentTrafficLightState(self) -> str:
         return self._currentTrafficLightState
 
-    def enterIdleMode(self):
+    def enterIdleMode(self) -> None:
         self._trafficLightStatePointer = 3
         self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
+
+
+
 
 
 def trafficLightStateChangeTests(numChanges):
