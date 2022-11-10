@@ -10,7 +10,7 @@ class Light:
         pass
 
     
-    def changeTrafficLightState(self) -> None:
+    def changeTrafficLightState(self, ) -> None:
         if self._trafficLightStatePointer == 3: #if light is currently in idle mode
             self._trafficLightStatePointer = 2
         else:
@@ -29,7 +29,7 @@ class Light:
 
 
 
-def trafficLightStateChangeTests(numChanges):
+def trafficLightStateChangeTests(numChanges, testTrafficLight):
     print("Testing traffic light state changes...")
     print("Printing current state...")
     print(testTrafficLight.getCurrentTrafficLightState())
@@ -63,4 +63,4 @@ def trafficLightStateChangeTests(numChanges):
 
 if __name__ == "__main__":
     testTrafficLight = Light()
-    trafficLightStateChangeTests(5)
+    trafficLightStateChangeTests(5, testTrafficLight)
