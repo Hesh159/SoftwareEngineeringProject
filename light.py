@@ -5,6 +5,7 @@ class Light:
         self._trafficLightStates = ["Green", "Amber", "Red", "Idle"]
         self._trafficLightStatePointer = 3
         self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
+        self._maxCarsAtLight = 15
 
     def __repr__() -> None:
         pass
