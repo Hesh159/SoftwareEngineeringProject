@@ -1,19 +1,19 @@
 
 class Junction():
 
-    def __init__(self, id: int):
+    def __init__(self, id: int) -> None:
         self._id = id
         self._neighbouringJunctions = []
         self._trafficLightsInJunction = []
 
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Junction id: {self._id}"
 
     
     #methods for creating, removing, and viewing junction neighbour pairs
     #possibly add limit to number of Junctions in NeighbouringJunctions (logically cannot be more than 4)
-    def addJunctionNeighbourPair(self, neighbouringJunctionToAdd: "Junction"):
+    def addJunctionNeighbourPair(self, neighbouringJunctionToAdd: "Junction") -> None:
         try:
             if not isinstance(neighbouringJunctionToAdd, Junction):
                 raise TypeError
@@ -29,7 +29,7 @@ class Junction():
             print("TypeError: Input to addJunctionNeighbourPair method must be an instance of Junction class")
         return
 
-    def removeJunctionNeighbourPair(self, neighbouringJunctionToRemove: "Junction"):
+    def removeJunctionNeighbourPair(self, neighbouringJunctionToRemove: "Junction") ->None:
         try:
             if not isinstance(neighbouringJunctionToRemove, Junction):
                 raise TypeError
@@ -43,19 +43,19 @@ class Junction():
             print("TypeError: Input to removeJunctionNeighbourPair method must be an instance of Junction class")
         return
 
-    def getNeighbouringJunctions(self):
+    def getNeighbouringJunctions(self) -> list:
         return self._neighbouringJunctions
 
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
-    def addTrafficLight(self, trafficLightToAdd):
+    def addTrafficLight(self, trafficLightToAdd) -> None:
         pass
 
-    def removeTrafficLight(self, trafficLightToRemove):
+    def removeTrafficLight(self, trafficLightToRemove) -> None:
         pass
 
     #get list of traffic lights in junction
-    def getTrafficLights(self):
+    def getTrafficLights(self) -> list:
         return self._trafficLightsInJunction
 
 
