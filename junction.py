@@ -1,10 +1,11 @@
 
 class Junction():
 
-    def __init__(self, id: int) -> None:
+    def __init__(self, id: int, isEntryJunction: bool) -> None:
         self._id = id
         self._neighbouringJunctions = []
         self._trafficLightsInJunction = []
+        self._isEntryJunction = isEntryJunction
 
 
     def __repr__(self) -> str:
@@ -45,6 +46,9 @@ class Junction():
 
     def getNeighbouringJunctions(self) -> list:
         return self._neighbouringJunctions
+
+    def checkIfEntryJunction(self) -> bool:
+        return self._isEntryJunction
 
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
@@ -116,10 +120,10 @@ def testJunctionPairMethods():
 
 
 if __name__ == "__main__":
-    testJunction1 = Junction(1)
-    testJunction2 = Junction(2)
-    testJunction3 = Junction(3)
-    testJunction4 = Junction(4)
+    testJunction1 = Junction(1, True)
+    testJunction2 = Junction(2, False)
+    testJunction3 = Junction(3, True)
+    testJunction4 = Junction(4, False)
 
     print("Testing Junction addNeighbourPair and removeNeighbourPair methods...")
     testJunctionPairMethods()
