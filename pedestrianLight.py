@@ -11,7 +11,7 @@ class PedestrianLight(Light):
 
 
     def changeTrafficLightState(self) -> None:
-        return super().changeTrafficLightState()
+        return super().changeTrafficLightState(addAmount=2)
 
     
     
