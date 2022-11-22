@@ -11,8 +11,14 @@ class Vehicle():
         self._route = Vehicle.getRoute()
         self._behaviour = random.choose(Vehicle.driverReactionTime)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         pass
+
+    def getRoute(self) -> list:
+        return self._route
+
+    def getBehaviour(self) -> tuple:
+        return self._behaviour
 
     @staticmethod
     def setRoute() -> list:
