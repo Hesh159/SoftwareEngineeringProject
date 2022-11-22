@@ -12,12 +12,16 @@ class Light:
         self._maxCarsAtLight = 15
         self._sourceJunction = sourceJunction
         self._destinationJunction = destJunction
-        self.id = Light.id
+        self._id = Light.id
         id += 1
         
 
     def __repr__(self) -> None:
         return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction}"
+
+
+    def getId(self) -> int:
+        return self._id
 
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount
