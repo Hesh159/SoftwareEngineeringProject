@@ -1,4 +1,3 @@
-from junction import Junction
 
 class Light:
     
@@ -6,7 +5,7 @@ class Light:
     trafficLightStates = ["Green", "Amber", "Red", "Idle"]
 
     #Light is initialized at Idle state
-    def __init__(self, sourceJunction: "Junction", destJunction: "Junction") -> None:
+    def __init__(self, sourceJunction, destJunction) -> None:
         self._trafficLightStatePointer = 3
         self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
         self._currentCarsAtLight = 0
@@ -20,6 +19,7 @@ class Light:
     def __repr__(self) -> None:
         return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction}"
 
+
     def __eq__(self, light) -> bool:
         if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction):
             return True
@@ -28,6 +28,12 @@ class Light:
 
     def getId(self) -> int:
         return self._id
+
+    def getLightDestination(self):
+        return self._destinationJunction
+
+    def addVehicle(self) -> None:
+        self._currentCarsAtLight += 1
 
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount
