@@ -24,10 +24,16 @@ class Light:
         if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction):
             return True
         return False
-        
+
 
     def getId(self) -> int:
         return self._id
+
+    def getLightDestination(self):
+        return self._destinationJunction
+
+    def addVehicle(self) -> None:
+        self._currentCarsAtLight += 1
 
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount

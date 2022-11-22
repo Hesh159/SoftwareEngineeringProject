@@ -1,3 +1,4 @@
+from junction import Junction
 import random
 
 class Vehicle():
@@ -8,6 +9,7 @@ class Vehicle():
     def __init__(self) -> None:
         self._route = Vehicle.setRoute()
         self._behaviour = random.choice(Vehicle.driverReactionTime)
+        self._currentLight = None
 
     def __repr__(self) -> str:
         pass
@@ -17,6 +19,18 @@ class Vehicle():
 
     def getBehaviour(self) -> tuple:
         return self._behaviour
+
+    
+    def enterJunction(self) -> None:
+        if (len(self._route) == 0):
+            #exit the system
+            pass
+        junctionToEnter = self._route[0]
+        for light in junctionToEnter.getTrafficLights():
+            if (light.getDestination() == self._route[1]):
+                light.addVehicle()
+                self._currentLight = light
+        return
 
     @staticmethod
     def setRoute() -> list:
