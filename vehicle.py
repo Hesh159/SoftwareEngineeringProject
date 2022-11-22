@@ -8,7 +8,7 @@ class vehicle():
     def __repr__(self) -> str:
         pass
 
-
+    
     def generateRoute():
         pass
     
