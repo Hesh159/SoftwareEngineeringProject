@@ -79,7 +79,13 @@ class Junction():
         return
 
     def removeTrafficLight(self, trafficLightToRemoveId) -> None:
-        pass
+        for light in self._trafficLightsInJunction:
+            if (light.getId() == trafficLightToRemoveId):
+                self._trafficLightsInJunction.remove(light)
+                print(f"{light} removed from {self}")
+            else:
+                print(f"Light with id {trafficLightToRemoveId} not found in {self}")
+        return
 
     #get list of traffic lights in junction
     def getTrafficLights(self) -> list:
