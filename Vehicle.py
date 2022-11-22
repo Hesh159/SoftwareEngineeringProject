@@ -3,7 +3,6 @@ import random
 import time
 
 class Vehicle():
-
     def __init__(self) -> None:
         self._dests = [1, 2, 3, 4]
         self._generateVehicle = randint(1, 15)

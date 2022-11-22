@@ -1,3 +1,4 @@
+from light import Light
 
 class Junction():
 
@@ -65,8 +66,17 @@ class Junction():
 
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
-    def addTrafficLight(self, trafficLightToAdd) -> None:
-        pass
+    def addTrafficLight(self, destinationJunction) -> None:
+        try:
+            if not isinstance(destinationJunction, Junction):
+                raise TypeError
+
+            trafficLight = Light(self, destinationJunction)
+            self._trafficLightsInJunction.append(trafficLight)
+
+        except TypeError:
+            print("TypeError: Input to addTrafficLight method must be an instance of Junction class")
+        return
 
     def removeTrafficLight(self, trafficLightToRemove) -> None:
         pass
