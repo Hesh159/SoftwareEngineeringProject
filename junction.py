@@ -28,17 +28,18 @@ class Junction():
         try:
             if not isinstance(neighbouringJunctionToAdd, Junction):
                 raise TypeError
-
+               
+            #calls the method again on the neighbouringJunctionToAdd object, using the current object as input
+            #a loop is avoided as once the neighbouringJunctionToAdd object calls the method again, the Junctions are in the list and this block of code is skipped.
             if neighbouringJunctionToAdd not in self._neighbouringJunctions:
                 self._neighbouringJunctions.append(neighbouringJunctionToAdd)
-                #calls the method again on the neighbouringJunctionToAdd object, using the current object as input
-                #a loop is avoided as once the neighbouringJunctionToAdd object calls the method again, the Junctions are in the list and this block of code is skipped.
                 print(f"Successfully added {neighbouringJunctionToAdd} to {self}")
                 neighbouringJunctionToAdd.addJunctionNeighbourPair(self)
 
         except TypeError:
             print("TypeError: Input to addJunctionNeighbourPair method must be an instance of Junction class")
         return
+
 
     def removeJunctionNeighbourPair(self, neighbouringJunctionToRemove: "Junction") ->None:
         try:
@@ -54,15 +55,19 @@ class Junction():
             print("TypeError: Input to removeJunctionNeighbourPair method must be an instance of Junction class")
         return
 
+
     def getNeighbouringJunctions(self) -> list:
         return self._neighbouringJunctions
+
 
     def checkIfEntryJunction(self) -> bool:
         return self._isEntryJunction
 
+
     @staticmethod
     def getEntryJunctions() -> list:
         return Junction.entryJunctions
+
 
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
@@ -72,7 +77,10 @@ class Junction():
                 raise TypeError
 
             trafficLight = Light(self, destinationJunction)
-            self._trafficLightsInJunction.append(trafficLight)
+            if trafficLight in self._trafficLightsInJunction:
+                del(trafficLight)
+            else:
+                self._trafficLightsInJunction.append(trafficLight)
 
         except TypeError:
             print("TypeError: Input to addTrafficLight method must be an instance of Junction class")

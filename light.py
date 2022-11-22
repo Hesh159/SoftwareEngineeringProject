@@ -24,7 +24,7 @@ class Light:
         if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction):
             return True
         return False
-
+        
 
     def getId(self) -> int:
         return self._id
