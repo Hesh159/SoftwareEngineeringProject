@@ -1,4 +1,3 @@
-from junction import Junction
 
 class Light:
     
@@ -6,7 +5,7 @@ class Light:
     trafficLightStates = ["Green", "Amber", "Red", "Idle"]
 
     #Light is initialized at Idle state
-    def __init__(self, sourceJunction: "Junction", destJunction: "Junction") -> None:
+    def __init__(self, sourceJunction, destJunction) -> None:
         self._trafficLightStatePointer = 3
         self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
         self._currentCarsAtLight = 0
@@ -19,6 +18,7 @@ class Light:
 
     def __repr__(self) -> None:
         return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction}"
+
 
     def __eq__(self, light) -> bool:
         if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction):

@@ -1,6 +1,4 @@
-from random import randint
 import random
-import time
 
 class Vehicle():
 
@@ -8,8 +6,8 @@ class Vehicle():
     driverReactionTime = [(1, 2), (2, 3)]
 
     def __init__(self) -> None:
-        self._route = Vehicle.getRoute()
-        self._behaviour = random.choose(Vehicle.driverReactionTime)
+        self._route = Vehicle.setRoute()
+        self._behaviour = random.choice(Vehicle.driverReactionTime)
 
     def __repr__(self) -> str:
         pass
@@ -25,7 +23,7 @@ class Vehicle():
         #chooses a hard coded route for D3, but will be updated to generate its own route based
         #on the junction layout for D4
         routes = [[1, 2, 3], [1, 4, 3], [3, 2, 1], [3, 4, 1]]
-        return random.choose(routes)
+        return random.choice(routes)
     
 
 if __name__ == "__main__":
