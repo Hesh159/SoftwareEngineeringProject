@@ -3,12 +3,13 @@ from junction import Junction
 class Light:
     
     id = 1
+    trafficLightStates = ["Green", "Amber", "Red", "Idle"]
 
     #Light is initialized at Idle state
     def __init__(self, sourceJunction: "Junction", destJunction: "Junction") -> None:
-        self._trafficLightStates = ["Green", "Amber", "Red", "Idle"]
         self._trafficLightStatePointer = 3
-        self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
+        self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
+        self._currentCarsAtLight = 0
         self._maxCarsAtLight = 15
         self._sourceJunction = sourceJunction
         self._destinationJunction = destJunction
@@ -18,6 +19,11 @@ class Light:
 
     def __repr__(self) -> None:
         return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction}"
+
+    def __eq__(self, light) -> bool:
+        if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction):
+            return True
+        return False
 
 
     def getId(self) -> int:
@@ -36,14 +42,14 @@ class Light:
         else:
             self._trafficLightStatePointer += addAmount
             self._trafficLightStatePointer %= modAmount
-        self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
+        self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
 
     def getCurrentTrafficLightState(self) -> str:
         return self._currentTrafficLightState
 
     def enterIdleMode(self) -> None:
         self._trafficLightStatePointer = 3
-        self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
+        self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
 
 
 
