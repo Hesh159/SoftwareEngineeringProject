@@ -30,6 +30,7 @@ class Vehicle():
             if (light.getDestination() == self._route[1]):
                 light.addVehicle()
                 self._currentLight = light
+        self._route = self._route[1:]
         return
 
     @staticmethod
