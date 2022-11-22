@@ -17,7 +17,7 @@ class Light:
         
 
     def __repr__(self) -> None:
-        return f"Light id: {self._id}"
+        return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction}"
 
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount
