@@ -68,6 +68,7 @@ class Junction():
     def getEntryJunctions() -> list:
         return Junction.entryJunctions
 
+    #makes an entry junction a regular junction
     @staticmethod
     def removeEntryJunction(junctionToRemove: "Junction") -> None:
         try:
@@ -79,7 +80,7 @@ class Junction():
                 Junction.entryJunctions.remove(junctionToRemove)
 
         except TypeError:
-            print("TypeError: Input to removeJunctionNeighbourPair method must be an instance of Junction class")
+            print("TypeError: Input to removeEntryJunction method must be an instance of Junction class")
         return
 
     

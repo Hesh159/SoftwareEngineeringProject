@@ -50,15 +50,30 @@ class TestJunction(unittest.TestCase):
         actualResult = testjunction1.checkIfEntryJunction()
 
         self.assertEqual(actualResult, True)
-
     
     def test_getEntryJunctionStaticMethod(self):
+        Junction.entryJunctions.clear()
         testjunction1 = Junction(isEntryJunction=True)
         testjunction2 = Junction(isEntryJunction=True)
         expectedResult = [testjunction1, testjunction2]
         actualResult = Junction.getEntryJunctions()
 
         self.assertEqual(actualResult, expectedResult)
+
+    def test_removeEntryJunctionStaticMethod(self):
+        Junction.entryJunctions.clear()
+        testJunction1 = Junction(isEntryJunction=True)
+        Junction.removeEntryJunction(testJunction1)
+        expectedResult = []
+
+        self.assertEqual(Junction.getEntryJunctions(), expectedResult)
+
+    def test_removeEntryJunctionBadInput(self):
+        Junction.entryJunctions.clear()
+        testJunction1 = Junction(isEntryJunction=True)
+        badInput = "TestString"
+        
+        self.assertRaises(TypeError, Junction.removeEntryJunction(badInput))
 
 
 
