@@ -21,9 +21,9 @@ class TestJunction(unittest.TestCase):
         self.assertEqual(actualResultListSize, expectedResultListSize)
 
     def test_addJunctionNeighbourPairWrongInput(self):
-        TestJunction1 = Junction()
+        testjunction1 = Junction()
         WrongInput = 17
-        self.assertRaises(TypeError, TestJunction1.addJunctionNeighbourPair(WrongInput))
+        self.assertRaises(TypeError, testjunction1.addJunctionNeighbourPair(WrongInput))
         
 
 
