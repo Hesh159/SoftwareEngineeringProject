@@ -101,6 +101,29 @@ class TestJunction(unittest.TestCase):
         
         self.assertRaises(TypeError, testJunction1.addTrafficLight(destinationJunction=badInput))
 
+    def test_addTrafficLightDuplicate(self):
+        testJunction1 = Junction()
+        destinationJunction = Junction()
+        testJunction1.addTrafficLight(destinationJunction=destinationJunction)
+        testJunction1.addTrafficLight(destinationJunction=destinationJunction)
+        expectedResultListSize = 1
+        actualResultListSize = len(testJunction1.getTrafficLights())
+
+        self.assertEqual(actualResultListSize, expectedResultListSize)
+
+    #removeTrafficLight test methods
+    def test_removeTrafficLightTest(self):
+        testJunction = Junction()
+        destinationJunction = Junction()
+        testJunction.addTrafficLight(destinationJunction=destinationJunction)
+        lightToRemove = testJunction.getTrafficLights()[0]
+        lightToRemoveId = lightToRemove.getId()
+        testJunction.removeTrafficLight(lightToRemoveId)
+
+        expectedResultListSize = 0
+        actualResultListSize = len(testJunction.getTrafficLights())
+
+        self.assertEqual(actualResultListSize, expectedResultListSize)
 
 if __name__ == "__main__":
     unittest.main()

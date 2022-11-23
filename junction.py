@@ -100,7 +100,7 @@ class Junction():
             print("TypeError: Input to addTrafficLight method must be an instance of Junction class")
         return
 
-    def removeTrafficLight(self, trafficLightToRemoveId) -> None:
+    def removeTrafficLight(self, trafficLightToRemoveId: int) -> None:
         for light in self._trafficLightsInJunction:
             if (light.getId() == trafficLightToRemoveId):
                 self._trafficLightsInJunction.remove(light)
