@@ -45,6 +45,22 @@ class TestJunction(unittest.TestCase):
         self.assertRaises(TypeError, testjunction1.removeJunctionNeighbourPair(badInput))
 
 
+    def test_checkIfEntryJunction(self):
+        testjunction1 = Junction(isEntryJunction=True)
+        actualResult = testjunction1.checkIfEntryJunction()
+
+        self.assertEqual(actualResult, True)
+
+    
+    def test_getEntryJunctionStaticMethod(self):
+        testjunction1 = Junction(isEntryJunction=True)
+        testjunction2 = Junction(isEntryJunction=True)
+        expectedResult = [testjunction1, testjunction2]
+        actualResult = Junction.getEntryJunctions()
+
+        self.assertEqual(actualResult, expectedResult)
+
+
 
 
 
