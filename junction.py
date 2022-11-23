@@ -1,11 +1,18 @@
+from light import Light
 
 class Junction():
 
-    def __init__(self, id: int, isEntryJunction: bool) -> None:
-        self._id = id
+    id = 1
+    entryJunctions = []
+
+    def __init__(self, isEntryJunction: bool=False) -> None:
+        self._id = Junction.id
         self._neighbouringJunctions = []
         self._trafficLightsInJunction = []
         self._isEntryJunction = isEntryJunction
+        if (self._isEntryJunction):
+            Junction.entryJunctions.append(self)
+        Junction.id += 1
 
 
     def __repr__(self) -> str:
@@ -14,21 +21,25 @@ class Junction():
     
     #methods for creating, removing, and viewing junction neighbour pairs
     #possibly add limit to number of Junctions in NeighbouringJunctions (logically cannot be more than 4)
-    def addJunctionNeighbourPair(self, neighbouringJunctionToAdd: "Junction") -> None:
+    def addJunctionNeighbourPair(self, neighbouringJunctionToAdd: "Junction"=None) -> None:
+        if (neighbouringJunctionToAdd == None):
+            neighbouringJunctionToAdd = Junction()
+
         try:
             if not isinstance(neighbouringJunctionToAdd, Junction):
                 raise TypeError
-
+               
+            #calls the method again on the neighbouringJunctionToAdd object, using the current object as input
+            #a loop is avoided as once the neighbouringJunctionToAdd object calls the method again, the Junctions are in the list and this block of code is skipped.
             if neighbouringJunctionToAdd not in self._neighbouringJunctions:
                 self._neighbouringJunctions.append(neighbouringJunctionToAdd)
-                #calls the method again on the neighbouringJunctionToAdd object, using the current object as input
-                #a loop is avoided as once the neighbouringJunctionToAdd object calls the method again, the Junctions are in the list and this block of code is skipped.
                 print(f"Successfully added {neighbouringJunctionToAdd} to {self}")
                 neighbouringJunctionToAdd.addJunctionNeighbourPair(self)
 
         except TypeError:
             print("TypeError: Input to addJunctionNeighbourPair method must be an instance of Junction class")
         return
+
 
     def removeJunctionNeighbourPair(self, neighbouringJunctionToRemove: "Junction") ->None:
         try:
@@ -44,19 +55,45 @@ class Junction():
             print("TypeError: Input to removeJunctionNeighbourPair method must be an instance of Junction class")
         return
 
+
     def getNeighbouringJunctions(self) -> list:
         return self._neighbouringJunctions
+
 
     def checkIfEntryJunction(self) -> bool:
         return self._isEntryJunction
 
+
+    @staticmethod
+    def getEntryJunctions() -> list:
+        return Junction.entryJunctions
+
+
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
-    def addTrafficLight(self, trafficLightToAdd) -> None:
-        pass
+    def addTrafficLight(self, destinationJunction) -> None:
+        try:
+            if not isinstance(destinationJunction, Junction):
+                raise TypeError
 
-    def removeTrafficLight(self, trafficLightToRemove) -> None:
-        pass
+            trafficLight = Light(self, destinationJunction)
+            if trafficLight in self._trafficLightsInJunction:
+                del(trafficLight)
+            else:
+                self._trafficLightsInJunction.append(trafficLight)
+
+        except TypeError:
+            print("TypeError: Input to addTrafficLight method must be an instance of Junction class")
+        return
+
+    def removeTrafficLight(self, trafficLightToRemoveId) -> None:
+        for light in self._trafficLightsInJunction:
+            if (light.getId() == trafficLightToRemoveId):
+                self._trafficLightsInJunction.remove(light)
+                print(f"{light} removed from {self}")
+            else:
+                print(f"Light with id {trafficLightToRemoveId} not found in {self}")
+        return
 
     #get list of traffic lights in junction
     def getTrafficLights(self) -> list:
@@ -70,23 +107,23 @@ def testJunctionPairMethods():
 
     #Attempt to run the addJunctionNeighbourPair method with invalid input, should raise TypeError
     print("Running addNeighbourPair() method with an input of 17...") 
-    testJunction1 .addJunctionNeighbourPair(17)
+    testJunction1.addJunctionNeighbourPair(17)
 
     #print testJunction1 s neighbouringJunctions (empty)
-    print(f"{testJunction1 } NeighbourList: {testJunction1 .getNeighbouringJunctions()}")
+    print(f"{testJunction1 } NeighbourList: {testJunction1.getNeighbouringJunctions()}")
     print("\n")
 
     #Attempt to run the addJunctionNeighbourPair method successfully
     print("Adding (testJunction1 ,  testJunction2), (testJunction1 , testJunction3),  testJunction2, testJunction4), (testJunction3, testJunction4) as neighbour pairs...")
-    testJunction1 .addJunctionNeighbourPair(testJunction2)
-    testJunction1 .addJunctionNeighbourPair(testJunction3)
+    testJunction1.addJunctionNeighbourPair(testJunction2)
+    testJunction1.addJunctionNeighbourPair(testJunction3)
     testJunction2.addJunctionNeighbourPair(testJunction4)
     testJunction3.addJunctionNeighbourPair(testJunction4)
     print("\n")
 
     #print neighbouringJunctions of all Junctions
     print("Printing neighbouringJunctions of all Junctions...")
-    print(f"{testJunction1 }, NeighbourList: {testJunction1 .getNeighbouringJunctions()}")  #2, 3
+    print(f"{testJunction1 }, NeighbourList: {testJunction1.getNeighbouringJunctions()}")  #2, 3
     print(f"{testJunction2}, NeighbourList:   {testJunction2.getNeighbouringJunctions()}")  #1, 4
     print(f"{testJunction3}, NeighbourList: {testJunction3.getNeighbouringJunctions()}")  #1, 4
     print(f"{testJunction4}, NeighbourList: {testJunction4.getNeighbouringJunctions()}")  #2, 3
@@ -110,8 +147,15 @@ def testJunctionPairMethods():
     print(f"Removing {testJunction1} and {testJunction2} neighbour pair...")
     testJunction2.removeJunctionNeighbourPair(testJunction1)
     print(f"{testJunction1}, NeighbourList: {testJunction1 .getNeighbouringJunctions()}")   #3
-    print(f"{testJunction2}, NeighbourList:   {testJunction2.getNeighbouringJunctions()}")  #4
+    print(f"{testJunction2}, NeighbourList: {testJunction2.getNeighbouringJunctions()}")  #4
     print("\n")
+
+    #run addNeighbourPair with an input of none
+    print(f'Running addJunctionNeighbourPair on {testJunction1} with no input...')
+    testJunction1.addJunctionNeighbourPair()
+    print(f"{testJunction1}, NeighbourList: {testJunction1 .getNeighbouringJunctions()}")   #3, #5
+    print('\n')
+
 
     print("Testing of junctionNeighbourPair methods complete")
 
@@ -120,10 +164,10 @@ def testJunctionPairMethods():
 
 
 if __name__ == "__main__":
-    testJunction1 = Junction(1, True)
-    testJunction2 = Junction(2, False)
-    testJunction3 = Junction(3, True)
-    testJunction4 = Junction(4, False)
+    testJunction1 = Junction()
+    testJunction2 = Junction()
+    testJunction3 = Junction()
+    testJunction4 = Junction()
 
     print("Testing Junction addNeighbourPair and removeNeighbourPair methods...")
     testJunctionPairMethods()

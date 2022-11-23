@@ -1,14 +1,39 @@
 
 class Light:
     
-    def __init__(self) -> None:
-        self._trafficLightStates = ["Green", "Amber", "Red", "Idle"]
-        self._trafficLightStatePointer = 3
-        self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
-        self._maxCarsAtLight = 15
+    id = 1
+    trafficLightStates = ["Green", "Amber", "Red", "Idle"]
 
-    def __repr__() -> None:
-        pass
+    #Light is initialized at Idle state
+    def __init__(self, sourceJunction, destJunction) -> None:
+        self._trafficLightStatePointer = 3
+        self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
+        self._currentCarsAtLight = 0
+        self._maxCarsAtLight = 15
+        self._sourceJunction = sourceJunction
+        self._destinationJunction = destJunction
+        self._id = Light.id
+        id += 1
+        
+
+    def __repr__(self) -> None:
+        return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction}"
+
+
+    def __eq__(self, light) -> bool:
+        if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction):
+            return True
+        return False
+
+
+    def getId(self) -> int:
+        return self._id
+
+    def getLightDestination(self):
+        return self._destinationJunction
+
+    def addVehicle(self) -> None:
+        self._currentCarsAtLight += 1
 
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount
@@ -23,14 +48,14 @@ class Light:
         else:
             self._trafficLightStatePointer += addAmount
             self._trafficLightStatePointer %= modAmount
-        self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
+        self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
 
     def getCurrentTrafficLightState(self) -> str:
         return self._currentTrafficLightState
 
     def enterIdleMode(self) -> None:
         self._trafficLightStatePointer = 3
-        self._currentTrafficLightState = self._trafficLightStates[self._trafficLightStatePointer]
+        self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
 
 
 
