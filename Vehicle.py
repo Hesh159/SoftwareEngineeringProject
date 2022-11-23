@@ -21,12 +21,12 @@ class Vehicle():
         return self._behaviour
 
     
-    def enterJunction(self) -> None:
+    def enterNextJunction(self) -> None:
         if (len(self._route) == 0):
             #exit the system
             pass
-        junctionToEnter = self._route[0]
-        for light in junctionToEnter.getTrafficLights():
+        nextJunction = self._route[0]
+        for light in nextJunction.getTrafficLights():
             if (light.getDestination() == self._route[1]):
                 light.addVehicle()
                 self._currentLight = light

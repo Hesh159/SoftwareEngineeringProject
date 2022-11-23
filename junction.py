@@ -101,12 +101,18 @@ class Junction():
         return
 
     def removeTrafficLight(self, trafficLightToRemoveId: int) -> None:
-        for light in self._trafficLightsInJunction:
-            if (light.getId() == trafficLightToRemoveId):
-                self._trafficLightsInJunction.remove(light)
-                print(f"{light} removed from {self}")
-            else:
-                print(f"Light with id {trafficLightToRemoveId} not found in {self}")
+        try:
+            if not isinstance(trafficLightToRemoveId, int):
+                raise TypeError
+                
+            for light in self._trafficLightsInJunction:
+                if (light.getId() == trafficLightToRemoveId):
+                    self._trafficLightsInJunction.remove(light)
+                    print(f"{light} removed from {self}")
+                else:
+                    print(f"Light with id {trafficLightToRemoveId} not found in {self}")
+        except TypeError:
+            print("TypeError: input must be of type int")
         return
 
     #get list of traffic lights in junction

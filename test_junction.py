@@ -125,5 +125,13 @@ class TestJunction(unittest.TestCase):
 
         self.assertEqual(actualResultListSize, expectedResultListSize)
 
+    def test_removeTrafficLightBadInput(self):
+        testJunction = Junction()
+        destJunction = Junction()
+        testJunction.addTrafficLight(destinationJunction=destJunction)
+        badInput = "This is bad input"
+
+        self.assertRaises(TypeError, testJunction.removeTrafficLight(badInput))
+
 if __name__ == "__main__":
     unittest.main()
