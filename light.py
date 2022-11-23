@@ -35,6 +35,9 @@ class Light:
     def addVehicle(self) -> None:
         self._currentCarsAtLight += 1
 
+    def removeVehicle(self) -> None:
+        self._currentCarsAtLight -= 1
+
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount
     #are changed slightly when called by these classes in order to skip amber.
@@ -50,7 +53,7 @@ class Light:
             self._trafficLightStatePointer %= modAmount
         self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
 
-    def getCurrentTrafficLightState(self) -> str:
+    def getCurrentState(self) -> str:
         return self._currentTrafficLightState
 
     def enterIdleMode(self) -> None:
