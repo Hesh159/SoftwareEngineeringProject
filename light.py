@@ -13,7 +13,7 @@ class Light:
         self._sourceJunction = sourceJunction
         self._destinationJunction = destJunction
         self._id = Light.id
-        id += 1
+        Light.id += 1
         
 
     def __repr__(self) -> None:
