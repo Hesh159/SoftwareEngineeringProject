@@ -63,39 +63,3 @@ class Light:
 
 
 
-
-def trafficLightStateChangeTests(numChanges, testTrafficLight):
-    print("Testing traffic light state changes...")
-    print("Printing current state...")
-    print(testTrafficLight.getCurrentTrafficLightState())
-    print("")
-
-    for i in range(numChanges):
-        print("Changing current state...")
-        testTrafficLight.changeTrafficLightState()
-        print("Printing current state...")
-        print(testTrafficLight.getCurrentTrafficLightState())
-        print("")
-
-    #testing enterIdleMode method
-    print("\nEntering idle mode...")
-    testTrafficLight.enterIdleMode()
-    print("Printing current state...")
-    print(testTrafficLight.getCurrentTrafficLightState())
-    print("")
-
-    #leaving idle mode
-    print("Changing current state...")
-    testTrafficLight.changeTrafficLightState()
-    print("Printing current state...")
-    print(testTrafficLight.getCurrentTrafficLightState())
-    print("\n")
-
-    print("Completed testing traffic light state changes")
-
-
-
-
-if __name__ == "__main__":
-    testTrafficLight = Light()
-    trafficLightStateChangeTests(5, testTrafficLight)
