@@ -68,6 +68,19 @@ class Junction():
     def getEntryJunctions() -> list:
         return Junction.entryJunctions
 
+    @staticmethod
+    def removeEntryJunction(junctionToRemove: "Junction") -> None:
+        try:
+            if not isinstance(junctionToRemove, Junction):
+                raise TypeError
+
+            if (junctionToRemove.checkIfEntryJunction()):
+                junctionToRemove._isEntryJunction = False
+                Junction.entryJunctions.remove(junctionToRemove)
+
+        except TypeError:
+            print("TypeError: Input to removeJunctionNeighbourPair method must be an instance of Junction class")
+        return
 
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
