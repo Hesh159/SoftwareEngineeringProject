@@ -59,7 +59,3 @@ class Light:
     def enterIdleMode(self) -> None:
         self._trafficLightStatePointer = 3
         self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
-
-
-
-

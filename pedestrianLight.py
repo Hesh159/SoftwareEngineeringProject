@@ -7,7 +7,7 @@ class PedestrianLight(Light):
     trafficLightStates = ["Green", "Red", "Idle"]
 
     def __init__(self) -> None:
-        super().__init__(trafficLightStatePointer, currentTrafficLightState) #Inherits
+        super().__init__() #Inherits
         self._buttonPressed = False
         self._blinkingLight = False
         self._lightXRed = False #check if left light is red
@@ -25,6 +25,7 @@ class PedestrianLight(Light):
 
     def buttonPress(self):
         if self._buttonPressed == True:
+            pass
             #alert other lights that they should go red
 
     def checkLights(self):
