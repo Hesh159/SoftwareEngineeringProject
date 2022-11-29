@@ -2,8 +2,6 @@ import tkinter
 from tkinter import *
 import customtkinter
 from PIL import Image, ImageTk
-import time
-import threading
 
 class TrafficGUI(customtkinter.CTk):
     APP_NAME = "Traffic Light System"
