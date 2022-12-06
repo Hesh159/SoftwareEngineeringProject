@@ -15,6 +15,7 @@ class TrafficLightController():
         baseTimePerCar = 2
 
         while True:
+            print(junctionToControl)
             for connectedLightSet in connectedLights: #connectedLights is a dict and connectedLightSet is a key for the dict
                                                         #the list of lights can be found in connectedLights[connectedLightSet]
                 lightList = connectedLights[connectedLightSet]
