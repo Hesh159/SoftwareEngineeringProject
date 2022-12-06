@@ -1,0 +1,19 @@
+from GUI import TrafficGUI
+
+def button_event(self):
+    self.t1number = 1
+
+def button_event2(self):
+    self.t1number = 2
+
+#Test 1: 
+def test_button_event():
+    trafficGUI = TrafficGUI()
+    trafficGUI.button_event()
+    assert trafficGUI.t1number == 1
+
+#Test 2: 
+def test_button_event2():
+    trafficGUI = TrafficGUI()
+    trafficGUI.button_event2()
+    assert trafficGUI.t1number == 2
