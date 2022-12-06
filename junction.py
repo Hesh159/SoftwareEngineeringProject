@@ -1,10 +1,11 @@
 from light import Light
-
+from pedestrianLight import PedestrianLight
 class Junction():
 
     id = 1
     entryJunctions = []
     junctions = []
+    pedLight = []
 
     def __init__(self, isEntryJunction: bool=False) -> None:
         self._id = Junction.id
@@ -160,3 +161,9 @@ class Junction():
 
     def getLightsFromJunction(self, junction) -> list:
         return self._connectedLights[junction]
+
+    def addPedestrianLight(self):
+        if len(Junction.pedLight) != 0:
+            return
+        pedLight = PedestrianLight(sourceJunction=self)
+        Junction.pedLight.append(pedLight)

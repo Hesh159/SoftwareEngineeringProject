@@ -42,6 +42,12 @@ class TrafficLightController():
                 
                 #checkPedestrianLight
                 #if checked start pedestrian light
+                if len(junctionToControl.pedLight) != 0:
+                    pedestrianLight = junctionToControl.pedLight[0]
+                    if pedestrianLight._buttonPressed == True:
+                        pedestrianLight.changeTrafficLightState()
+                        sleep(10)
+                        pedestrianLight.changeTrafficLightState()
 
     def getCarsWaiting(self, lightList):
         carsWaiting = 0

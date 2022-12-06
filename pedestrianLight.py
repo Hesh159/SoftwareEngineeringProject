@@ -5,12 +5,13 @@ class PedestrianLight(Light):
 
     trafficLightStates = ["Green", "Red", "Idle"]
 
-    def __init__(self) -> None:
-        super().__init__() #Inherits
+    def __init__(self, sourceJunction) -> None:
+        super().__init__(sourceJunction=sourceJunction, prevJunction=None, destJunction=None) #Inherits
         self._buttonPressed = False
         self._blinkingLight = False
         self._lightXRed = False #check if left light is red
         self._lightYRed = False #check if right light is red
+        self._junction = sourceJunction
 
     '''def __repr__(self) -> None:
         super().__repr__()'''           #I am unsure about the ID since it will be different to light.py, 

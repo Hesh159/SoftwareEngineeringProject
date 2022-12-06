@@ -19,9 +19,11 @@ class Light:
         Light.id += 1
         
 
-    def __repr__(self) -> None:
+    def __repr__(self) -> str:
         return f"Source: {self._sourceJunction} \tDest: {self._destinationJunction} \tPrev: {self._prevJunction}\n"
 
+    def __str__(self) -> str:
+        return f"Id: {self._id}\tState: {self._currentTrafficLightState}"
 
     def __eq__(self, light) -> bool:
         if (light == None):

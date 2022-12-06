@@ -20,6 +20,7 @@ class Setup():
         Junction3.addJunctionNeighbourPair(Junction4)
         Junction3.addJunctionNeighbourPair(entryJunction2)
         self.createLights()
+        self.createPedestrianLights()
 
     #automatically creates the systems traffic lights. For every junction it creates a light coming from a neighbouring junction, and going 
     #to a neighbouring junction
@@ -31,6 +32,10 @@ class Setup():
                     if prevJunction != destJunction:
                         junction.addTrafficLight(prevJunction=prevJunction, destinationJunction=destJunction)
         return
+
+    def createPedestrianLights(self):
+        for junction in Junction.getJunctions():
+            junction.addPedestrianLight()
 
 def mainSetup():
     setup = Setup()
