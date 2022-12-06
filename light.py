@@ -14,6 +14,7 @@ class Light:
         self._destinationJunction = destJunction
         self._prevJunction = prevJunction
         self._cyclesWithoutCar = 0
+        self._vehicleQueue = []
         self._id = Light.id
         Light.id += 1
         
@@ -34,11 +35,13 @@ class Light:
     def getLightDestination(self):
         return self._destinationJunction
 
-    def addVehicle(self) -> None:
+    def addVehicle(self, vehicle) -> None:
         self._currentCarsAtLight += 1
+        self._vehicleQueue.append(vehicle)
 
     def removeVehicle(self) -> None:
         self._currentCarsAtLight -= 1
+        self._vehicleQueue.pop(0)
 
     def getCarsAtLight(self) -> int:
         return self._currentCarsAtLight

@@ -15,23 +15,25 @@ class Vehicle():
     def __repr__(self) -> str:
         pass
 
+
     def getRoute(self) -> list:
         return self._route
 
     def getBehaviour(self) -> tuple:
         return self._behaviour
 
-    
     def enterNextJunction(self) -> None:
-        if (len(self._route) == 0):
-            #exit the system
-            pass
-        nextJunction = self._route[0]
-        for light in nextJunction.getTrafficLights():
-            if (light.getDestination() == self._route[1]):
-                light.addVehicle()
-                self._currentLight = light
-        self._route = self._route[1:]
+        if len(self._route) == 2:
+            del(self)
+        else:
+            nextJunction = self._route[1]
+            for light in nextJunction.getTrafficLights():
+                if light.getLightDestination() == self._route[2]:
+                    if self._currentLight != None:
+                        self._currentLight.removeVehicle()
+                    light.addVehicle(self)
+                    self._currentLight = light
+                    self._route = self._route[1:]
         return
 
     @staticmethod
