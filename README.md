@@ -1,5 +1,5 @@
 <h1>Software Engineering Project</h1>
-<h3>Traffic Light Control System<h3>
+<h3>Traffic Light Control System</h3>
 <p>This is a control systen that simulates traffic and traffic light interation. It is an improved version of outdated modern day traffic lights which are now considered unreliable.</p>
 <br>
 <h3>Disclaimer!</h3>
