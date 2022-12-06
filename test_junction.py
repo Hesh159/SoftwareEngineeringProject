@@ -169,6 +169,32 @@ class TestJunction(unittest.TestCase):
 
         self.assertEqual(expectedConnectedLightsSize, actualConnectedLightsSize)
 
+    def test_junctionList(self):
+        Junction.junctions.clear()
+        testJunction = Junction()
+        expectedSize = 1
+        actualSize = len(Junction.getJunctions())
+
+        self.assertEqual(expectedSize, actualSize)
+
+    def test_removeFromJunctionList(self):
+        Junction.junctions.clear()
+        testJunction = Junction()
+        Junction.removeJunction(testJunction)
+        expectedSize = 0
+        actualSize = len(Junction.getJunctions())
+
+        self.assertEqual(expectedSize, actualSize)
+
+    def test_removeJunctionRemovesNeighbours(self):
+        testJunction = Junction()
+        neighbourJunction = Junction()
+        testJunction.addJunctionNeighbourPair(neighbourJunction)
+        Junction.removeJunction(testJunction)
+        expectedSize = 0
+        actualSize = len(testJunction.getNeighbouringJunctions())
+
+        self.assertEqual(expectedSize, actualSize)
 
 if __name__ == "__main__":
     unittest.main()
