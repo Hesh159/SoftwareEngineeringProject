@@ -18,7 +18,7 @@ class Light:
         
 
     def __repr__(self) -> None:
-        return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction} \nPrevious Junction: {self._prevJunction}"
+        return f"Source: {self._sourceJunction} \tDest: {self._destinationJunction} \tPrev: {self._prevJunction}\n"
 
 
     def __eq__(self, light) -> bool:
@@ -38,6 +38,9 @@ class Light:
 
     def removeVehicle(self) -> None:
         self._currentCarsAtLight -= 1
+
+    def getCarsAtLight(self) -> int:
+        return self._currentCarsAtLight
 
     def getMaxCarsAtLight(self) -> int:
         return self._maxCarsAtLight
