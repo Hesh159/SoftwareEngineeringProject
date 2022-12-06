@@ -18,7 +18,7 @@ class Setup():
         Junction1.addJunctionNeighbourPair(Junction4)
         Junction2.addJunctionNeighbourPair(Junction3)
         Junction3.addJunctionNeighbourPair(Junction4)
-        Junction4.addJunctionNeighbourPair(entryJunction2)
+        Junction3.addJunctionNeighbourPair(entryJunction2)
         self.createLights()
 
     #automatically creates the systems traffic lights. For every junction it creates a light coming from a neighbouring junction, and going 

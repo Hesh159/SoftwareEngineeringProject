@@ -1,4 +1,5 @@
 from junction import Junction
+from setup import mainSetup
 import random
 
 class Vehicle():
@@ -35,12 +36,25 @@ class Vehicle():
 
     @staticmethod
     def setRoute() -> list:
-        #chooses a hard coded route for D3, but will be updated to generate its own route based
-        #on the junction layout for D4
-        routes = [[1, 2, 3], [1, 4, 3], [3, 2, 1], [3, 4, 1]]
-        return random.choice(routes)
+        route = []
+        entryJunctions = Junction.getEntryJunctions().copy()
+        random.shuffle(entryJunctions)
+        entryJunction = entryJunctions[0]
+        junction = entryJunction
+        exitJunction = entryJunctions[1]
+        route.append(entryJunction)
+        while exitJunction not in junction.getNeighbouringJunctions():
+            newJunction = random.choice(junction.getNeighbouringJunctions())
+            if newJunction not in route:
+                route.append(newJunction)
+                junction = newJunction
+        route.append(exitJunction)
+        print(route)
+        return route
+
     
 
 if __name__ == "__main__":
+    mainSetup()
     testVehicle = Vehicle()
     
