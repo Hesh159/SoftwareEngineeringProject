@@ -85,12 +85,12 @@ class Junction():
 
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
-    def addTrafficLight(self, destinationJunction) -> None:
+    def addTrafficLight(self, prevJunction, destinationJunction) -> None:
         try:
-            if not isinstance(destinationJunction, Junction):
+            if not isinstance(destinationJunction, Junction) or not isinstance(prevJunction, Junction):
                 raise TypeError
 
-            trafficLight = Light(self, destinationJunction)
+            trafficLight = Light(sourceJunction=self, prevJunction=prevJunction, destJunction=destinationJunction)
             if trafficLight in self._trafficLightsInJunction:
                 del(trafficLight)
             else:

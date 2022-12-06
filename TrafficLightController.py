@@ -8,6 +8,6 @@ class TrafficLightController():
 
 
     def setup(self):
-        
+        pass
 
 
