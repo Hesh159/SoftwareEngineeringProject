@@ -7,7 +7,8 @@ class TrafficLightController():
         pass
 
 
-    def setup(self):
+    def setup(self) -> None:
+        
         pass
 
 
