@@ -43,6 +43,9 @@ class Light:
         self._currentCarsAtLight -= 1
         self._vehicleQueue.pop(0)
 
+    def getVehicleQueue(self) -> list:
+        return self._vehicleQueue
+
     def getCarsAtLight(self) -> int:
         return self._currentCarsAtLight
 

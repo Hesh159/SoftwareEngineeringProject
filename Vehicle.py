@@ -54,8 +54,6 @@ class Vehicle():
         print(route)
         return route
 
-    
-
 if __name__ == "__main__":
     mainSetup()
     testVehicle = Vehicle()

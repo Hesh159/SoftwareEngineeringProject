@@ -1,7 +1,7 @@
 from junction import Junction
 from light import Light
 from time import sleep
-
+import threading
 class TrafficLightController():
 
     def __init__(self) -> None:          
@@ -19,16 +19,30 @@ class TrafficLightController():
             for connectedLightSet in connectedLights: #connectedLights is a dict and connectedLightSet is a key for the dict
                                                         #the list of lights can be found in connectedLights[connectedLightSet]
                 lightList = connectedLights[connectedLightSet]
-                carsWaiting = self.getCarsWaiting(lightList)
-                self.changeLightStates(lightList)   #change to green
-                sleep(baseTimePerCar * carsWaiting)
-                self.changeLightStates(lightList)   #change to amber
-                sleep(baseTimePerCar)
-                self.changeLightStates(lightList)            #change to red
 
+                carsWaiting = self.getCarsWaiting(lightList)
+                timeElapsed = 0
+
+                self.changeLightStates(lightList)   #change to green
+                while timeElapsed < baseTimePerCar * carsWaiting:
+                    for light in lightList:
+                        vehicleQueue = light.getVehicleQueue()
+                        if len(vehicleQueue) != 0:
+                            vehicleToMove = light.getVehicleQueue()[0]
+                            vehicleToMove.enterNextJunction()
+                    sleep(2)
+                    timeElapsed += 2
+                self.changeLightStates(lightList)   #change to amber
+                for light in lightList:
+                    vehicleQueue = light.getVehicleQueue()
+                    if len(vehicleQueue) != 0:
+                        vehicleToMove = light.getVehicleQueue()[0]
+                        vehicleToMove.enterNextJunction()
+                self.changeLightStates(lightList)            #change to red
+                
+                
                 #checkPedestrianLight
                 #if checked start pedestrian light
-                
 
     def getCarsWaiting(self, lightList):
         carsWaiting = 0
