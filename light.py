@@ -5,23 +5,25 @@ class Light:
     trafficLightStates = ["Green", "Amber", "Red", "Idle"]
 
     #Light is initialized at Idle state
-    def __init__(self, sourceJunction, destJunction) -> None:
+    def __init__(self, sourceJunction, destJunction, prevJunction) -> None:
         self._trafficLightStatePointer = 3
         self._currentTrafficLightState = Light.trafficLightStates[self._trafficLightStatePointer]
         self._currentCarsAtLight = 0
         self._maxCarsAtLight = 15
         self._sourceJunction = sourceJunction
         self._destinationJunction = destJunction
+        self._prevJunction = prevJunction
+        self._cyclesWithoutCar = 0
         self._id = Light.id
         Light.id += 1
         
 
     def __repr__(self) -> None:
-        return f"Id {self._id}\nSource Junction: {self._sourceJunction} \nDestination Junction: {self._destinationJunction}"
+        return f"Source: {self._sourceJunction} \tDest: {self._destinationJunction} \tPrev: {self._prevJunction}\n"
 
 
     def __eq__(self, light) -> bool:
-        if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction):
+        if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction) and (self._prevJunction == light._prevJunction):
             return True
         return False
 
@@ -37,6 +39,21 @@ class Light:
 
     def removeVehicle(self) -> None:
         self._currentCarsAtLight -= 1
+
+    def getCarsAtLight(self) -> int:
+        return self._currentCarsAtLight
+
+    def getMaxCarsAtLight(self) -> int:
+        return self._maxCarsAtLight
+
+    def setMaxCarsAtLight(self, newMaxCarsNum) -> None:
+        self._maxCarsAtLight = newMaxCarsNum
+
+    def increaseCyclesWithoutCar(self) -> None:
+        self._cyclesWithoutCar += 1
+
+    def resetCyclesWithoutCar(self) -> None:
+        self._cyclesWithoutCar = 0
 
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount

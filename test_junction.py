@@ -81,7 +81,8 @@ class TestJunction(unittest.TestCase):
     def test_addTrafficLightTest(self):
         testJunction1 = Junction()
         destinationJunction = Junction()
-        testJunction1.addTrafficLight(destinationJunction=destinationJunction)
+        prevJunction = Junction()
+        testJunction1.addTrafficLight(destinationJunction=destinationJunction, prevJunction=prevJunction)
         expectedResultListSize = 1
         actualResultListSize = len(testJunction1.getTrafficLights())
 
@@ -90,22 +91,32 @@ class TestJunction(unittest.TestCase):
     def test_addTrafficLightCreatesLightObject(self):
         testJunction1 = Junction()
         destinationJunction = Junction()
-        testJunction1.addTrafficLight(destinationJunction=destinationJunction)
+        prevJunciton = Junction()
+        testJunction1.addTrafficLight(destinationJunction=destinationJunction, prevJunction=prevJunciton)
         createdObject = testJunction1.getTrafficLights()[0]
 
         self.assertTrue(isinstance(createdObject, Light))
 
-    def test_addTrafficLightBadInput(self):
+    def test_addTrafficLightWithDestJunctionBadInput(self):
         testJunction1 = Junction()
         badInput = "Shit input"
+        prevJunction = Junction()
         
-        self.assertRaises(TypeError, testJunction1.addTrafficLight(destinationJunction=badInput))
+        self.assertRaises(TypeError, testJunction1.addTrafficLight(destinationJunction=badInput, prevJunction=prevJunction))
+
+    def test_addTrafficLightWithPrevJunctionBadInput(self):
+        testJunction = Junction()
+        destJunction = Junction()
+        badInput = "ghdh2"
+
+        self.assertRaises(TypeError, testJunction.addTrafficLight(destinationJunction=destJunction, prevJunction=badInput))
 
     def test_addTrafficLightDuplicate(self):
         testJunction1 = Junction()
         destinationJunction = Junction()
-        testJunction1.addTrafficLight(destinationJunction=destinationJunction)
-        testJunction1.addTrafficLight(destinationJunction=destinationJunction)
+        prevJunction = Junction()
+        testJunction1.addTrafficLight(destinationJunction=destinationJunction, prevJunction=prevJunction)
+        testJunction1.addTrafficLight(destinationJunction=destinationJunction, prevJunction=prevJunction)
         expectedResultListSize = 1
         actualResultListSize = len(testJunction1.getTrafficLights())
 
@@ -115,7 +126,8 @@ class TestJunction(unittest.TestCase):
     def test_removeTrafficLightTest(self):
         testJunction = Junction()
         destinationJunction = Junction()
-        testJunction.addTrafficLight(destinationJunction=destinationJunction)
+        prevJunction = Junction()
+        testJunction.addTrafficLight(destinationJunction=destinationJunction, prevJunction=prevJunction)
         lightToRemove = testJunction.getTrafficLights()[0]
         lightToRemoveId = lightToRemove.getId()
         testJunction.removeTrafficLight(lightToRemoveId)
@@ -128,10 +140,61 @@ class TestJunction(unittest.TestCase):
     def test_removeTrafficLightBadInput(self):
         testJunction = Junction()
         destJunction = Junction()
-        testJunction.addTrafficLight(destinationJunction=destJunction)
+        prevJunction = Junction()
+        testJunction.addTrafficLight(destinationJunction=destJunction, prevJunction=prevJunction)
         badInput = "This is bad input"
 
         self.assertRaises(TypeError, testJunction.removeTrafficLight(badInput))
+
+    def test_addToConnectedLights(self):
+        testJunction = Junction()
+        destJunction = Junction()
+        prevJunction = Junction()
+        testJunction.addTrafficLight(destinationJunction=destJunction, prevJunction=prevJunction)
+        expectedValuesInConnectedLights = 1
+        actualValuesInConnectedLights = len(testJunction.getLightsFromJunction(prevJunction))
+
+        self.assertEqual(expectedValuesInConnectedLights, actualValuesInConnectedLights)
+
+    def test_removeFromConnectedLights(self):
+        testJunction = Junction()
+        destJunction = Junction()
+        prevJunction  = Junction()
+        testJunction.addTrafficLight(destinationJunction=destJunction, prevJunction=prevJunction)
+        lightToRemove = testJunction._trafficLightsInJunction[0].getId()
+        testJunction.removeTrafficLight(lightToRemove)
+
+        expectedConnectedLightsSize = 0
+        actualConnectedLightsSize = len(testJunction.getLightsFromJunction(prevJunction))
+
+        self.assertEqual(expectedConnectedLightsSize, actualConnectedLightsSize)
+
+    def test_junctionList(self):
+        Junction.junctions.clear()
+        testJunction = Junction()
+        expectedSize = 1
+        actualSize = len(Junction.getJunctions())
+
+        self.assertEqual(expectedSize, actualSize)
+
+    def test_removeFromJunctionList(self):
+        Junction.junctions.clear()
+        testJunction = Junction()
+        Junction.removeJunction(testJunction)
+        expectedSize = 0
+        actualSize = len(Junction.getJunctions())
+
+        self.assertEqual(expectedSize, actualSize)
+
+    def test_removeJunctionRemovesNeighbours(self):
+        testJunction = Junction()
+        neighbourJunction = Junction()
+        testJunction.addJunctionNeighbourPair(neighbourJunction)
+        Junction.removeJunction(testJunction)
+        expectedSize = 0
+        actualSize = len(testJunction.getNeighbouringJunctions())
+
+        self.assertEqual(expectedSize, actualSize)
 
 if __name__ == "__main__":
     unittest.main()
