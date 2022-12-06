@@ -33,5 +33,8 @@ class Setup():
             print(junction.getTrafficLights())
         return
 
+def mainSetup():
+    setup = Setup()
+
 if __name__ == "__main__":
     setupTest = Setup()

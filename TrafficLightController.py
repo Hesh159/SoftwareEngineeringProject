@@ -24,6 +24,9 @@ class TrafficLightController():
                 self.changeLightStates(lightList)   #change to amber
                 sleep(baseTimePerCar)
                 self.changeLightStates(lightList)            #change to red
+
+                #checkPedestrianLight
+                #if checked start pedestrian light
                 
 
     def getCarsWaiting(self, lightList):
