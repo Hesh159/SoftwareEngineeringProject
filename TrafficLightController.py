@@ -1,5 +1,6 @@
 from junction import Junction
 from light import Light
+from time import sleep
 
 class TrafficLightController():
 
@@ -18,10 +19,12 @@ class TrafficLightController():
                                                         #the list of lights can be found in connectedLights[connectedLightSet]
                 lightList = connectedLights[connectedLightSet]
                 carsWaiting = self.getCarsWaiting(lightList)
-
+                self.changeLightStates(lightList)   #change to green
+                sleep(baseTimePerCar * carsWaiting)
+                self.changeLightStates(lightList)   #change to amber
+                sleep(baseTimePerCar)
+                self.changeLightStates(lightList)            #change to red
                 
-
-
 
     def getCarsWaiting(self, lightList):
         carsWaiting = 0
@@ -33,11 +36,15 @@ class TrafficLightController():
                 light.resetCyclesWithoutCar()
             if carsAtLight > carsWaiting:
                 carsWaiting = carsAtLight
-        return carsWaiting + 1    
+        return carsWaiting
 
     def changeLightStates(self, lightList):
         for light in lightList:
-            if light.getCurrentState() == "idle":
+            if light.getCurrentState == "idle":
+                light.changeTrafficLightState()
+                light.changeTrafficLightState()
+            else:
+                light.changeTrafficLightState()
 
 
 
