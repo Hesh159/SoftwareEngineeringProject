@@ -1,5 +1,4 @@
 from light import Light
-from light import trafficLightStateChangeTests
 import time
 
 class PedestrianLight(Light):
@@ -50,4 +49,3 @@ class PedestrianLight(Light):
 # temp tests
 if __name__ == "__main__":
     testTrafficLight = PedestrianLight()
-    trafficLightStateChangeTests(5, testTrafficLight)
