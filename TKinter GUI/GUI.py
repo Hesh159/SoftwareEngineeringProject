@@ -2,9 +2,10 @@ import tkinter
 from tkinter import *
 import customtkinter
 from PIL import Image, ImageTk
+import time
 
 class TrafficGUI(customtkinter.CTk):
-    APP_NAME = "Traffic Light System"
+    APP_NAME = "Pedestrian Crossing Statistics"
     WIDTH = 1300
     HEIGHT = 900
 
@@ -20,7 +21,13 @@ class TrafficGUI(customtkinter.CTk):
         self.resizable(False, False)
 
         #Variables from other classes
-        self.t1number = 0;
+        self.number = IntVar()
+        self.number.set(0)
+        self.max = IntVar()
+        self.max.set(0)
+
+        #TEST
+        self.currentNo = 0
 
         #Sidebar
         self.frame_right = customtkinter.CTkFrame(master=self, width=450, height=self.HEIGHT, corner_radius=0, fg_color="#24272b")
@@ -42,30 +49,65 @@ class TrafficGUI(customtkinter.CTk):
                                                         height=35, command=self.button_event2, text_font=("Roboto Medium", -17), fg_color="steel blue")
         self.pedestrian_button2.place(relx=0.5, rely=0.74, anchor=tkinter.CENTER)
 
+        #TEST BUTTONS
+        self.TESTBUT = customtkinter.CTkButton(master=self.frame_right, text="Increment", corner_radius=6, width=200, 
+                                                        height=25, command=self.TEST_BUT, text_font=("Roboto Medium", -15), fg_color="steel blue")
+        self.TESTBUT.place(relx=0.5, rely=0.9, anchor=tkinter.CENTER)
+
+        self.TESTBUT2 = customtkinter.CTkButton(master=self.frame_right, text="Decrement", corner_radius=6, width=200, 
+                                                        height=25, command=self.TEST_BUT2, text_font=("Roboto Medium", -15), fg_color="steel blue")
+        self.TESTBUT2.place(relx=0.5, rely=0.94, anchor=tkinter.CENTER)
+
         #Sidebar statistics
         self.title3 = customtkinter.CTkLabel(master=self.frame_right, text="Traffic Count", text_font=("Roboto Medium", -21), text_color="white")
         self.title3.place(relx=0.5, rely=0.385, anchor=tkinter.CENTER)
-        self.text1 = customtkinter.CTkLabel(master=self.frame_right, text="Light 1: X", text_font=("Ariel", -17), text_color="white")
-        self.text1.place(relx=0.35, rely=0.44, anchor=tkinter.W)
-        self.text2 = customtkinter.CTkLabel(master=self.frame_right, text="Light 2: X", text_font=("Ariel", -17), text_color="white")
-        self.text2.place(relx=0.35, rely=0.48, anchor=tkinter.W)
-        self.text3 = customtkinter.CTkLabel(master=self.frame_right, text="Light 3: X", text_font=("Ariel", -17), text_color="white")
-        self.text3.place(relx=0.35, rely=0.52, anchor=tkinter.W)
-        self.text4 = customtkinter.CTkLabel(master=self.frame_right, text="Light 4: X", text_font=("Ariel", -17), text_color="white")
-        self.text4.place(relx=0.35, rely=0.56, anchor=tkinter.W)
-        self.text5 = customtkinter.CTkLabel(master=self.frame_right, text="Light 5: X", text_font=("Ariel", -17), text_color="white")
-        self.text5.place(relx=0.35, rely=0.6, anchor=tkinter.W)
-        self.text6 = customtkinter.CTkLabel(master=self.frame_right, text="Light 6: X", text_font=("Ariel", -17), text_color="white")
-        self.text6.place(relx=0.35, rely=0.64, anchor=tkinter.W)
-        self.text7 = customtkinter.CTkLabel(master=self.frame_right, text="Light 7: X", text_font=("Ariel", -17), text_color="white")
-        self.text7.place(relx=0.35, rely=0.68, anchor=tkinter.W)
-        self.text8 = customtkinter.CTkLabel(master=self.frame_right, text="Light 8: X", text_font=("Ariel", -17), text_color="white")
-        self.text8.place(relx=0.35, rely=0.72, anchor=tkinter.W)
+
+        self.text1 = customtkinter.CTkLabel(master=self.frame_right, text="Light 1:", text_font=("Ariel", -17), text_color="white")
+        self.text1.place(relx=0.3, rely=0.44, anchor=tkinter.W)
+        self.out1 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out1.place(relx=0.57, rely=0.44, anchor=tkinter.W)
+
+        self.text2 = customtkinter.CTkLabel(master=self.frame_right, text="Light 2:", text_font=("Ariel", -17), text_color="white")
+        self.text2.place(relx=0.3, rely=0.48, anchor=tkinter.W)
+        self.out2 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out2.place(relx=0.57, rely=0.48, anchor=tkinter.W)
+
+        self.text3 = customtkinter.CTkLabel(master=self.frame_right, text="Light 3:", text_font=("Ariel", -17), text_color="white")
+        self.text3.place(relx=0.3, rely=0.52, anchor=tkinter.W)
+        self.out3 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out3.place(relx=0.57, rely=0.52, anchor=tkinter.W)
+
+        self.text4 = customtkinter.CTkLabel(master=self.frame_right, text="Light 4:", text_font=("Ariel", -17), text_color="white")
+        self.text4.place(relx=0.3, rely=0.56, anchor=tkinter.W)
+        self.out4 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out4.place(relx=0.57, rely=0.56, anchor=tkinter.W)
+
+        self.text5 = customtkinter.CTkLabel(master=self.frame_right, text="Light 5:", text_font=("Ariel", -17), text_color="white")
+        self.text5.place(relx=0.3, rely=0.6, anchor=tkinter.W)
+        self.out5 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out5.place(relx=0.57, rely=0.6, anchor=tkinter.W)
+
+        self.text6 = customtkinter.CTkLabel(master=self.frame_right, text="Light 6:", text_font=("Ariel", -17), text_color="white")
+        self.text6.place(relx=0.3, rely=0.64, anchor=tkinter.W)
+        self.out6 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out6.place(relx=0.57, rely=0.64, anchor=tkinter.W)
+
+        self.text7 = customtkinter.CTkLabel(master=self.frame_right, text="Light 7:", text_font=("Ariel", -17), text_color="white")
+        self.text7.place(relx=0.3, rely=0.68, anchor=tkinter.W)
+        self.out7 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out7.place(relx=0.57, rely=0.68, anchor=tkinter.W)
+
+        self.text8 = customtkinter.CTkLabel(master=self.frame_right, text="Light 8:", text_font=("Ariel", -17), text_color="white")
+        self.text8.place(relx=0.3, rely=0.72, anchor=tkinter.W)
+        self.out8 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.number), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out8.place(relx=0.57, rely=0.72, anchor=tkinter.W)
 
         self.title4 = customtkinter.CTkLabel(master=self.frame_right, text="Total Traffic", text_font=("Roboto Medium", -21), text_color="white")
         self.title4.place(relx=0.5, rely=0.8, anchor=tkinter.CENTER)
-        self.text8 = customtkinter.CTkLabel(master=self.frame_right, text="Total: XX", text_font=("Ariel", -17), text_color="white")
-        self.text8.place(relx=0.35, rely=0.855, anchor=tkinter.W)
+        self.text9 = customtkinter.CTkLabel(master=self.frame_right, text="Total:", text_font=("Ariel", -17), text_color="white")
+        self.text9.place(relx=0.3, rely=0.855, anchor=tkinter.W)
+        self.out9 = customtkinter.CTkLabel(master=self.frame_right, textvariable=str(self.max), text_font=("Ariel", -17), text_color="white", width=30)
+        self.out9.place(relx=0.57, rely=0.855, anchor=tkinter.W)
 
         #Traffic lights
         self.frame_left = customtkinter.CTkFrame(master=self, width=850, height=self.HEIGHT, corner_radius=0, fg_color="pink")
@@ -122,6 +164,19 @@ class TrafficGUI(customtkinter.CTk):
         self.after(9000, self.redrawPLight2, "brown2")
         self.after(11000, self.redrawLight6, "SeaGreen2")
         self.after(11000, self.redrawLight8, "SeaGreen2")
+
+    def TEST_BUT(self):
+        self.currentNo = self.currentNo + 1
+        self.number.set(self.currentNo)
+        currentNoInt = int(self.currentNo)
+        self.max.set(currentNoInt*8)
+
+    def TEST_BUT2(self):
+        self.currentNo = self.currentNo - 1
+        self.number.set(self.currentNo)
+        currentNoInt = int(self.currentNo)
+        self.max.set(currentNoInt*8)
+
 
     #Traffic light color redraw
 
