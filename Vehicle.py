@@ -23,7 +23,8 @@ class Vehicle():
         return self._behaviour
 
     def enterNextJunction(self) -> None:
-        if len(self._route) == 2:
+        if len(self._route) <= 3:
+            print("Vehicle Leaving System")
             del(self)
         else:
             nextJunction = self._route[1]
@@ -51,7 +52,6 @@ class Vehicle():
                 route.append(newJunction)
                 junction = newJunction
         route.append(exitJunction)
-        print(route)
         return route
 
 if __name__ == "__main__":

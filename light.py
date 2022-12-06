@@ -24,6 +24,8 @@ class Light:
 
 
     def __eq__(self, light) -> bool:
+        if (light == None):
+            return False
         if (self._sourceJunction == light._sourceJunction) and (self._destinationJunction == light._destinationJunction) and (self._prevJunction == light._prevJunction):
             return True
         return False
