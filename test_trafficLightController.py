@@ -1,4 +1,5 @@
 from TrafficLightController import TrafficLightController
+from junction import Junction
 
 #Test 1 - Check that the controller() function is looping
 def test_controller_looping():
