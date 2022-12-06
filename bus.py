@@ -1,4 +1,3 @@
-import time
 from Vehicle import Vehicle
 
 class bus(Vehicle):
