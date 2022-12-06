@@ -16,11 +16,28 @@ class TrafficLightController():
         while True:
             for connectedLightSet in connectedLights: #connectedLights is a dict and connectedLightSet is a key for the dict
                                                         #the list of lights can be found in connectedLights[connectedLightSet]
+                lightList = connectedLights[connectedLightSet]
+                carsWaiting = self.getCarsWaiting(lightList)
+
+                
+
 
 
     def getCarsWaiting(self, lightList):
-        pass            
+        carsWaiting = 0
+        for light in lightList:
+            carsAtLight = light.getCarsAtLight()
+            if carsAtLight == 0:
+                light.increaseCyclesWithoutCar()
+            else:
+                light.resetCyclesWithoutCar()
+            if carsAtLight > carsWaiting:
+                carsWaiting = carsAtLight
+        return carsWaiting + 1    
 
+    def changeLightStates(self, lightList):
+        for light in lightList:
+            if light.getCurrentState() == "idle":
 
 
 
