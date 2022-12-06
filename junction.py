@@ -9,6 +9,7 @@ class Junction():
         self._id = Junction.id
         self._neighbouringJunctions = []
         self._trafficLightsInJunction = []
+        self._connectedLights = {}
         self._isEntryJunction = isEntryJunction
         if (self._isEntryJunction):
             Junction.entryJunctions.append(self)
@@ -95,6 +96,7 @@ class Junction():
                 del(trafficLight)
             else:
                 self._trafficLightsInJunction.append(trafficLight)
+                self.addToConnectedLights(trafficLight)
 
         except TypeError:
             print("TypeError: Input to addTrafficLight method must be an instance of Junction class")
@@ -108,6 +110,7 @@ class Junction():
             for light in self._trafficLightsInJunction:
                 if (light.getId() == trafficLightToRemoveId):
                     self._trafficLightsInJunction.remove(light)
+                    self.removeFromConnectedLights(light)
                     print(f"{light} removed from {self}")
                 else:
                     print(f"Light with id {trafficLightToRemoveId} not found in {self}")
@@ -119,3 +122,21 @@ class Junction():
     def getTrafficLights(self) -> list:
         return self._trafficLightsInJunction
 
+
+    #connectedLights is a dict containing lists of lights that can be green at the same time
+    def addToConnectedLights(self, lightToAdd) -> None:
+        if lightToAdd._prevJunction  not in self._connectedLights:
+            self._connectedLights[lightToAdd._prevJunction] = [lightToAdd]
+        else:
+            self._connectedLights[lightToAdd._prevJunction].append(lightToAdd)
+
+    def removeFromConnectedLights(self, lightToRemove) -> None:
+        junctionKey = lightToRemove._prevJunction
+        self._connectedLights[junctionKey].remove(lightToRemove)
+
+
+    def getConnectedLightLists(self) -> dict:
+        return self._connectedLights
+
+    def getLightsFromJunction(self, junction) -> list:
+        return self._connectedLights[junction]
