@@ -4,6 +4,7 @@ class Junction():
 
     id = 1
     entryJunctions = []
+    junctions = []
 
     def __init__(self, isEntryJunction: bool=False) -> None:
         self._id = Junction.id
@@ -13,6 +14,8 @@ class Junction():
         self._isEntryJunction = isEntryJunction
         if (self._isEntryJunction):
             Junction.entryJunctions.append(self)
+        else:
+            Junction.junctions.append(self)
         Junction.id += 1
 
 
@@ -84,6 +87,23 @@ class Junction():
             print("TypeError: Input to removeEntryJunction method must be an instance of Junction class")
         return
 
+    @staticmethod
+    def getJunctions() -> list:
+        return Junction.junctions
+
+    @staticmethod
+    def removeJunction(junctionToRemove: "Junction") -> None:
+        try:
+            if not isinstance(junctionToRemove, Junction):
+                raise TypeError
+
+            for junction in junctionToRemove.getNeighbouringJunctions():
+                junctionToRemove.removeJunctionNeighbourPair(junction)
+            Junction.junctions.remove(junctionToRemove)
+
+        except TypeError:
+            print("TypeError: Input to removeJunction method must be an instance of Junction class")
+        return
     
     #methods for adding and removing traffic lights to junctions trafficLightsInJunction list
     def addTrafficLight(self, prevJunction, destinationJunction) -> None:
@@ -123,7 +143,9 @@ class Junction():
         return self._trafficLightsInJunction
 
 
-    #connectedLights is a dict containing lists of lights that can be green at the same time
+    #connectedLights is a dict containing multiple lists, each list contains all the lights that can be set to green at the same time
+    #currently that is determined by a lights previousJunction attribute, all lights that have the same previous junction can be
+    #green at the same time with no issue
     def addToConnectedLights(self, lightToAdd) -> None:
         if lightToAdd._prevJunction  not in self._connectedLights:
             self._connectedLights[lightToAdd._prevJunction] = [lightToAdd]
@@ -133,7 +155,6 @@ class Junction():
     def removeFromConnectedLights(self, lightToRemove) -> None:
         junctionKey = lightToRemove._prevJunction
         self._connectedLights[junctionKey].remove(lightToRemove)
-
 
     def getConnectedLightLists(self) -> dict:
         return self._connectedLights
