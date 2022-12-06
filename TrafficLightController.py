@@ -15,6 +15,7 @@ class TrafficLightController():
         baseTimePerCar = 2
 
         while True:
+            print(junctionToControl)
             for connectedLightSet in connectedLights: #connectedLights is a dict and connectedLightSet is a key for the dict
                                                         #the list of lights can be found in connectedLights[connectedLightSet]
                 lightList = connectedLights[connectedLightSet]
@@ -24,6 +25,9 @@ class TrafficLightController():
                 self.changeLightStates(lightList)   #change to amber
                 sleep(baseTimePerCar)
                 self.changeLightStates(lightList)            #change to red
+
+                #checkPedestrianLight
+                #if checked start pedestrian light
                 
 
     def getCarsWaiting(self, lightList):
@@ -40,11 +44,21 @@ class TrafficLightController():
 
     def changeLightStates(self, lightList):
         for light in lightList:
-            if light.getCurrentState == "idle":
+            if light.getCurrentState() == "Idle":
                 light.changeTrafficLightState()
                 light.changeTrafficLightState()
             else:
                 light.changeTrafficLightState()
+
+    def controllerTest(self, lights):
+        baseTimePerCar = 0.1
+        lightList = lights
+        carsWaiting = self.getCarsWaiting(lightList)
+        self.changeLightStates(lightList)  
+        sleep(baseTimePerCar * carsWaiting)
+        self.changeLightStates(lightList)   
+        sleep(baseTimePerCar)
+        self.changeLightStates(lightList)           
 
 
 

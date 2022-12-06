@@ -21,7 +21,6 @@ class Junction():
 
     def __repr__(self) -> str:
         return f"Junction id: {self._id}"
-
     
     #methods for creating, removing, and viewing junction neighbour pairs
     #possibly add limit to number of Junctions in NeighbouringJunctions (logically cannot be more than 4)

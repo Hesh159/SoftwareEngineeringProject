@@ -18,7 +18,7 @@ class Setup():
         Junction1.addJunctionNeighbourPair(Junction4)
         Junction2.addJunctionNeighbourPair(Junction3)
         Junction3.addJunctionNeighbourPair(Junction4)
-        Junction4.addJunctionNeighbourPair(entryJunction2)
+        Junction3.addJunctionNeighbourPair(entryJunction2)
         self.createLights()
 
     #automatically creates the systems traffic lights. For every junction it creates a light coming from a neighbouring junction, and going 
@@ -30,8 +30,10 @@ class Setup():
                 for destJunction in neighbouringJunctions:
                     if prevJunction != destJunction:
                         junction.addTrafficLight(prevJunction=prevJunction, destinationJunction=destJunction)
-            print(junction.getTrafficLights())
         return
+
+def mainSetup():
+    setup = Setup()
 
 if __name__ == "__main__":
     setupTest = Setup()

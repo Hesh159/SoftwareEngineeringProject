@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./TKinter GUI"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "off"
 }
