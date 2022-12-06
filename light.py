@@ -43,6 +43,10 @@ class Light:
     def getCarsAtLight(self) -> int:
         return self._currentCarsAtLight
 
+    #for testing purposes only
+    def setCarsAtLight(self, carsAtLight) -> None:
+        self._currentCarsAtLight = carsAtLight
+
     def getMaxCarsAtLight(self) -> int:
         return self._maxCarsAtLight
 
@@ -54,6 +58,9 @@ class Light:
 
     def resetCyclesWithoutCar(self) -> None:
         self._cyclesWithoutCar = 0
+
+    def getCyclesWithoutCar(self) -> int:
+        return self._cyclesWithoutCar
 
     #cycles through the light states by adding to trafficLightStatePointer and getting the modulas
     #as subclasses pedestrianLight and busLight do not have an amber state, the addAmount and modAmount

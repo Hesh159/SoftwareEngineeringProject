@@ -1,26 +1,54 @@
+import unittest
 from TrafficLightController import TrafficLightController
 from junction import Junction
+from light import Light
+from setup import mainSetup
 
-#Test 1 - Check that the controller() function is looping
-def test_controller_looping():
-    tlc = TrafficLightController()
-    junction = Junction()
-    tlc.controller(junction)
-    assert tlc.controller(junction) == True
+class TestTrafficLightController(unittest.TestCase):
 
-#Test 2 - Check that the getCarsWaiting() function is returning the expected values
-def test_getCarsWaiting():
-    tlc = TrafficLightController()
-    lightList = [Light(1, "red"), Light(2, "green")]
-    assert tlc.getCarsWaiting(lightList) == 0
-    lightList[1].setCarsAtLight(5)
-    assert tlc.getCarsWaiting(lightList) == 5
+    def test_getCarsWaiting(self):
+        lights = testJunction.getTrafficLights()
+        lights[0].setCarsAtLight(8)
+        lights[1].setCarsAtLight(10)
+        expectedResult = 10
+        actualResult = TrafficLightController.getCarsWaiting(self, lights)
 
-#Test 3 - Check that the changeLightStates() function is changing states correctly
-def test_changeLightStates():
-    tlc = TrafficLightController()
-    lightList = [Light(1, "red"), Light(2, "green")]
-    tlc.changeLightStates(lightList)
-    assert lightList[0].getCurrentState() == "amber"
-    assert lightList[1].getCurrentState() == "red"
+        self.assertEqual(expectedResult, actualResult)
 
+    def test_getCarsWaitingIncreaseCycles(self):
+        lights = testJunction.getTrafficLights()
+        lights[0].setCarsAtLight(0)
+        TrafficLightController.getCarsWaiting(self, lights)
+        expectedResult = 1
+        actualResult = lights[0].getCyclesWithoutCar()
+
+        self.assertEqual(expectedResult, actualResult)
+
+    def test_getCarsWaitingResetCycles(self):
+        lights = testJunction.getTrafficLights()
+        lights[0].setCarsAtLight(0)
+        TrafficLightController.getCarsWaiting(self, lights)
+        lights[0].setCarsAtLight(5)
+        TrafficLightController.getCarsWaiting(self, lights)
+        expectedResult = 0
+        actualResult = lights[0].getCyclesWithoutCar()
+
+        self.assertEqual(expectedResult, actualResult)
+
+    def test_controller(self):
+        controller = TrafficLightController()
+        lights = testJunction.getTrafficLights()
+        lights[0].setCarsAtLight(0)
+        lights[1].setCarsAtLight(1)
+        TrafficLightController.controllerTest(controller, lights)
+        expectedResult = "Red"
+        actualResult = lights[0].getCurrentState()
+
+        self.assertEqual(expectedResult, actualResult)
+
+
+
+if __name__ == "__main__":
+    mainSetup()
+    testJunction = Junction.junctions[0]
+    unittest.main()

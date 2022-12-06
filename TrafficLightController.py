@@ -43,11 +43,21 @@ class TrafficLightController():
 
     def changeLightStates(self, lightList):
         for light in lightList:
-            if light.getCurrentState == "idle":
+            if light.getCurrentState() == "Idle":
                 light.changeTrafficLightState()
                 light.changeTrafficLightState()
             else:
                 light.changeTrafficLightState()
+
+    def controllerTest(self, lights):
+        baseTimePerCar = 0.1
+        lightList = lights
+        carsWaiting = self.getCarsWaiting(lightList)
+        self.changeLightStates(lightList)  
+        sleep(baseTimePerCar * carsWaiting)
+        self.changeLightStates(lightList)   
+        sleep(baseTimePerCar)
+        self.changeLightStates(lightList)           
 
 
 

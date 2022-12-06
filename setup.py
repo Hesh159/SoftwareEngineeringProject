@@ -30,7 +30,6 @@ class Setup():
                 for destJunction in neighbouringJunctions:
                     if prevJunction != destJunction:
                         junction.addTrafficLight(prevJunction=prevJunction, destinationJunction=destJunction)
-            print(junction.getTrafficLights())
         return
 
 def mainSetup():

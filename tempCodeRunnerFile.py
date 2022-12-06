@@ -1,2 +1,1 @@
-
-        mainSetup()
+import unittest
